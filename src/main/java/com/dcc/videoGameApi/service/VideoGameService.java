@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -24,6 +26,15 @@ public class VideoGameService {
     }
     public Optional<VideoGame> GetSingleGame(Integer id){
         return videoGameRepository.findById(id);
+    }
+    public HashMap<String,Integer> GetConsoleData(){
+        List<String> consoles = videoGameRepository.findAll().stream().map(v -> v.getPlatform()).distinct().collect(Collectors.toList());
+        HashMap<String,Integer> consoleSalesData = new HashMap<String,Integer>();
+        for(String n : consoles){
+                Integer totalSales = Math.toIntExact(videoGameRepository.findAll().stream().filter(i -> i.getPlatform().equals(n)).count());
+                consoleSalesData.put(n,totalSales);
+        }
+        return consoleSalesData;
     }
 
 }
