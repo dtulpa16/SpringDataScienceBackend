@@ -33,6 +33,7 @@ public class VideoGameController {
         return service.GetSingleGame(id);
     }
 
+
     @GetMapping("/console-sales")
     public HashMap<String,Integer> GetConsoleData(){
         return service.GetConsoleData();
@@ -41,6 +42,10 @@ public class VideoGameController {
     @GetMapping("/yearly-sales/{year}")
     public HashMap<String,Integer> GetYearlySale(@PathVariable Integer year){
         return service.GetYearlySale(year);
+    }
+    @GetMapping("/most-sold/{year}")
+    public HashMap<String, HashMap<String, Double>> GetMostSoldByYear(@PathVariable Integer year){
+        return service.GetMostSoldByYear(year);
     }
 
 }
