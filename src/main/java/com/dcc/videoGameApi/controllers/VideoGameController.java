@@ -38,4 +38,9 @@ public class VideoGameController {
         return service.GetConsoleData();
     }
 
+    @GetMapping("/yearly-sales/{year}")
+    public HashMap<String,Integer> GetYearlySale(@PathVariable Integer year){
+        return service.GetYearlySale(year);
+    }
+
 }
