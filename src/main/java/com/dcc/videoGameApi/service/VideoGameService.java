@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Transactional
 @Service
@@ -28,16 +29,33 @@ public class VideoGameService {
     public Optional<VideoGame> GetSingleGame(Integer id){
         return videoGameRepository.findById(id);
     }
-    public HashMap<String,Integer> GetConsoleData(){
-//        List<String> consoles = videoGameRepository.findAll().stream().map(v -> v.getPlatform()).distinct().collect(Collectors.toList());
-        List<String> consoles = videoGameRepository.findAll().stream().filter(y -> y.getYear() > 2013).map(v -> v.getPlatform()).distinct().collect(Collectors.toList());
-        HashMap<String,Integer> consoleSalesData = new HashMap<String,Integer>();
-        for(String n : consoles){
-                Integer totalSales = Math.toIntExact(videoGameRepository.findAll().stream().filter(i -> i.getPlatform().equals(n)).count());
-                consoleSalesData.put(n,totalSales);
+
+
+
+
+
+
+    public HashMap<String, Double> GetConsoleData(){
+        HashMap<String,Double> consoleSalesData = new HashMap<String,Double>();
+        for(String n : videoGameRepository.findAll().stream().filter(y -> y.getYear() >= 2013).map(v -> v.getPlatform()).distinct().collect(Collectors.toList())){
+                consoleSalesData.put(n, videoGameRepository.findAll().stream().filter(p -> p.getYear() >= 2013).filter(i -> i.getPlatform().equals(n)).map(g-> g.getGlobalsales()).reduce((double) 0,(e1, e2)->e1 + e2));
         }
         return consoleSalesData;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public HashMap<String,Integer> GetYearlySale(Integer year){
         List<String> consoles = videoGameRepository.findAll().stream().filter(y -> y.getYear().equals(year)).map(v -> v.getPlatform()).distinct().collect(Collectors.toList());
         HashMap<String,Integer> consoleSalesData = new HashMap<String,Integer>();

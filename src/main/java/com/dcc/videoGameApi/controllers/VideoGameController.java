@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -35,7 +36,7 @@ public class VideoGameController {
 
 
     @GetMapping("/console-sales")
-    public HashMap<String,Integer> GetConsoleData(){
+    public HashMap<String, Double> GetConsoleData(){
         return service.GetConsoleData();
     }
 
