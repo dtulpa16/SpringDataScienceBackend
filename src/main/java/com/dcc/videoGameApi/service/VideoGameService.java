@@ -30,11 +30,6 @@ public class VideoGameService {
         return videoGameRepository.findById(id);
     }
 
-
-
-
-
-
     public HashMap<String, Double> GetConsoleData(){
         HashMap<String,Double> consoleSalesData = new HashMap<String,Double>();
         for(String n : videoGameRepository.findAll().stream().filter(y -> y.getYear() >= 2013).map(v -> v.getPlatform()).distinct().collect(Collectors.toList())){
@@ -42,19 +37,6 @@ public class VideoGameService {
         }
         return consoleSalesData;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public HashMap<String,Integer> GetYearlySale(Integer year){
         List<String> consoles = videoGameRepository.findAll().stream().filter(y -> y.getYear().equals(year)).map(v -> v.getPlatform()).distinct().collect(Collectors.toList());
